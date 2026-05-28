@@ -13,7 +13,7 @@ The Protein Data Bank (PDB) is a repository of three-dimensional structures of m
 1. **Access the PDB website:** Open a web browser and navigate to the [RCSB PDB website](https://www.rcsb.org/).
 2. **Search for the structure:** Use the ID `1UBI` in the search bar.
 3. **Download the PDB file:** On the structure page, locate the **"Download Files"** section and click on **"PDB Legacy"** to download the file.
-4. **Save the PDB file:** Choose a location on your computer. The file will typically be named `1UBI.pdb`.
+4. **Save the PDB file:** Choose a location on your computer. The file will typically be named `1UBI.pdb`. If you're not managing to do it, easy, I get it for you [HERE](1UBI.pdb).
 
 <p align="center">
     <img src="PDB.png" alt="PDB website" height="250" />
