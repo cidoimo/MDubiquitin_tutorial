@@ -1,0 +1,47 @@
+---
+layout: default
+title: MD Simulation of Ubiquitin with AMBER22
+description: A simple tutorial to start your career in Molecular Dynamics
+---
+
+# MD Simulation of Ubiquitin with AMBER22
+
+This tutorial aims to provide a comprehensive introduction to classical molecular dynamics simulations using the Amber software package. Amber is a widely used tool for simulating biomolecular systems at the atomic level, enabling researchers to investigate a wide range of phenomena, including protein folding, ligand-protein interactions, and enzyme catalysis.
+
+This tutorial focuses on a small protein, **Ubiquitin**, which will be simulated for a time of **100 ns**. Ubiquitin is a well-studied protein involved in various cellular processes, making it a suitable example for learning molecular dynamics simulations using Amber 2022.
+
+---
+
+## **Step 1**: Retrieve the Structure
+
+The Protein Data Bank (PDB) is a repository of three-dimensional structures of macromolecules, such as proteins and nucleic acids. To download the ubiquitin protein structure (PDB ID: **1UBI**), follow these steps:
+
+* **Access the PDB website:** Open a web browser and navigate to the [RCSB PDB website](https://www.rcsb.org/).
+* **Search for the structure:** Use the ID `1UBI` in the search bar.
+* **Download the PDB file:** On the structure page, locate the "Download Files" section. Click on the "PDB Format" option to download the file.
+* **Save the PDB file:** Choose a location on your computer. The file will typically be named `1UBI.pdb`.
+
+![PDB website](assets/img/PDB.jpg)
+![Ubiquitin structure](assets/img/ubiquitine.jpg)
+
+---
+
+## **Step 2**: Cleaning the PDB File for Topology Preparation
+
+The PDB file must be prepared for simulation. It is highly recommended to **keep an unaltered copy** of the downloaded PDB file as a reference in case you encounter problems during the preparation or simulation process.
+
+* **Clean the file:** `CONECT` records define connectivity between atoms, but AMBER utilizes its own internal bonding information. Remove all `CONECT` lines from the PDB.
+* **Add structural records:** Ensure all necessary `TER` records are present to mark the end of a chain, as well as an `END` record at the very termination of the file.
+* **Strip all hydrogen atoms:** It is recommended to let AMBER add hydrogen atoms to the structure to prevent atom-naming conflicts. Remove existing hydrogens using a text editor (Atom, Gedit) or programs like PyMOL or VMD.
+* **Always visualize the file:** Open the cleaned file in VMD to verify that there are no strange bonds or incorrect visualizations before proceeding.
+
+---
+
+## **Step 3**: Building Topology Using the TLeap Module
+
+Once you have the prepared PDB, you can pass it to the **TLeap** module for topology construction. TLeap is a powerful tool within the Amber suite designed for preparing molecular systems by manipulating and modifying molecular structures. For more information, visit the [Amber TLeap Tutorial](https://ambermd.org/tutorials/pengfei).
+
+For this tutorial, it is recommended to open TLeap in your terminal and type one command at a time to understand the workflow:
+
+```bash
+tleap
