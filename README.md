@@ -33,4 +33,6 @@ The training pipeline is structured into three progressive modules:
 
 ## Prerequisites
 * Basic Linux/Unix command-line competency
+* AMBER25 installed on your pc
+* Gromacs suite 2025 installed on your pc
 * Access to GPU-accelerated computing nodes (for production run efficiency)
