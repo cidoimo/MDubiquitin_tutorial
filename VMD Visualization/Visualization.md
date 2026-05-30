@@ -1,4 +1,5 @@
 ## 👁️ Visualization of Trajectories with VMD
+![VMD](https://img.shields.io/badge/Visualization-VMD-green)
 
 Isn't it beautiful? Molecular dynamics (MD) simulations are essential for understanding molecular behavior over time, but interpreting the complex data can be challenging. Visualization programs like **VMD (Visual Molecular Dynamics)** are the standard for making sense of this data.
 
