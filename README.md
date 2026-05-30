@@ -2,6 +2,7 @@
 Molecular Dynamics (MD) tutorial to simulate ubiquitin protein with AMBER
 
 ![AmberTools 2025](https://img.shields.io/badge/AmberTools-2025-blue)
+![Amber2025](https://img.shields.io/badge/Amber-2025-red)
 ![VMD](https://img.shields.io/badge/Visualization-VMD-green)
 ![CUDA](https://img.shields.io/badge/GPU-CUDA%20Accelerated-orange)
 
