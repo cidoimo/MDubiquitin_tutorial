@@ -19,12 +19,12 @@ Comprehensive introduction to classical molecular dynamics (MD) simulations for 
 The training pipeline is structured into three progressive modules:
 
 1. **MD Simulation of Ubiquitin with AMBER (Work Block)**
-   * System preparation via LEaP (solvation, neutralization) --> ![CLICK ME]([https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Energy%20Minimization](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Topology%20Building))
-   * Energy minimization (steepest descent & conjugate gradient) --> ![CLICK ME](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Energy%20Minimization)
-   * System heating and equilibration with position restraints --> ![CLICK ME]([https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Energy%20Minimization](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Equilibration))
-   * 100 ns unrestrained production run using CUDA acceleration --> ![CLICK ME]([https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Energy%20Minimization](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Production))
+   * System preparation via LEaP (solvation, neutralization) --> [CLICK ME](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Topology%20Building)
+   * Energy minimization (steepest descent & conjugate gradient) --> [CLICK ME](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Energy%20Minimization)
+   * System heating and equilibration with position restraints --> [CLICK ME](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Equilibration)
+   * 100 ns unrestrained production run using CUDA acceleration --> [CLICK ME](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Production)
 
-2. **Visualization of Trajectories with VMD**
+2. **Visualization of Trajectories with [VMD](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/VMD%20Visualization)**
    * Loading topology and coordinate trajectory tracks
    * Customizing graphical representations (NewCartoon, structural color-coding)
 
