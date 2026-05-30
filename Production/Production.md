@@ -37,4 +37,4 @@ Congrats, you've reached the end of this tutorial! Are you still sane?
 
 | | |
 | :--- | :--- |
-| The first time you run an MD simulation is a classic "rite of passage." You’ll move from panic (monitoring `mdinfo` every minute) to awe when you finally see those atoms vibrate in VMD. Expect a few "Fatal Errors," some disk space headaches, and a lot of patience, but it’s worth it. Now, let the GPU do the heavy lifting—you've done the hard part. Welcome to the club! | ![Sana e salva](https://img1.picmix.com/output/stamp/normal/0/9/0/4/1604090_a14a5.gif) |
+| The first time you run an MD simulation is a classic "rite of passage." You’ll move from panic (monitoring `mdinfo` every minute) to awe when you finally see those atoms vibrate in VMD. Expect a few "Fatal Errors," some disk space headaches, and a lot of patience, but it’s worth it. Now, let the GPU do the heavy lifting, you've done the hard part. Welcome to the club! | ![Sana e salva](https://img1.picmix.com/output/stamp/normal/0/9/0/4/1604090_a14a5.gif) |
