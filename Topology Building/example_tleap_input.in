@@ -1,0 +1,23 @@
+# Example of tleap input file
+
+# Sourcing of force fields
+source leaprc.protein.ff19SB
+source leaprc.water.opc
+
+# Loading of pdb
+pdb = loadpdb yourfile.pdb
+
+# Saving of your file in nowat form both pdb and prmtop/rst7
+savepdb pdb yourfile_nowat.pdb
+saveamberparm pdb yourfile_nowat.prmtop yourfile_nowat.rst7
+
+# Solvatation step
+solvateBox pdb OPCBOX 12.0
+# Neutralization step
+addions pdb Na+ 0
+
+# Saving of your file in ionized/neutralized form both pdb and prmtop/rst7
+saveamberparm pdb yourfile_ionized.prmtop yourfile_ionized.rst7
+savepdb pdb yourfile_ionized.pdb
+
+quit
