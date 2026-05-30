@@ -21,7 +21,7 @@ Well, now. Before calculating metrics like RMSD, we must "fit" the trajectory to
   
 | Unfitted Trajectory | Fitted Trajectory |
 | :---: | :---: |
-| <img src="https://github.com/cidoimo/MDubiquitin_tutorial/raw/main/Analysis/nofit.gif" width="300"> | <img src="https://github.com/cidoimo/MDubiquitin_tutorial/raw/main/Analysis/fit.gif" width="300"> |
+| <img src="https://github.com/cidoimo/MDubiquitin_tutorial/raw/main/Analysis/images/nofit.gif" width="300"> | <img src="https://github.com/cidoimo/MDubiquitin_tutorial/raw/main/Analysis/images/fit.gif" width="300"> |
 
 </div>
 
@@ -133,6 +133,6 @@ gmx gyrate -s frame0_centered.pdb -f your_trajectory_fittedCA.xtc -o rgyr.xvg
 
 | | **Hey there, gotcha!** | |
 | :---: | :--- | :---: |
-| | Congratulations! You've successfully navigated the core workflow of Molecular Dynamics. You have learned how to prepare a system, run a simulation, and—most importantly—extract meaningful data to validate your protein's behavior. You now have a solid, comprehensive overview of how to simulate and analyze a molecular trajectory. From the initial system setup to the final RMSD, RMSF, and Radius of Gyration analyses, you have covered the essential steps of a professional MD study. You are definitely on the right track to becoming a structural bioinformatician! Keep exploring! | <img src="https://media.tenor.com/on6WFzYlLJcAAAAM/pokemon-cute.gif" width="250"> |
+| | Congratulations! You've successfully navigated the core workflow of Molecular Dynamics. You have learned how to prepare a system, run a simulation, and, most importantly, extract meaningful data to validate your protein's behavior. You now have a solid, comprehensive overview of how to simulate and analyze a molecular trajectory. From the initial system setup to the final RMSD, RMSF, and Radius of Gyration analyses, you have covered the essential steps of a professional MD study. You are definitely on the right track to becoming a structural bioinformatician! Keep exploring! | <img src="https://media.tenor.com/on6WFzYlLJcAAAAM/pokemon-cute.gif" width="250"> |
 
 </div>
