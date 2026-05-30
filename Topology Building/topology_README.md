@@ -1,5 +1,6 @@
 # MD Simulation of Ubiquitin with AMBER25
 ![AmberTools 2025](https://img.shields.io/badge/AmberTools-2025-blue)
+![Amber2025](https://img.shields.io/badge/Amber-2025-red)
 
 This tutorial aims to provide a comprehensive introduction to classical molecular dynamics simulations using the Amber software package. Amber is a widely used tool for simulating biomolecular systems at the atomic level, enabling researchers to investigate a wide range of phenomena, including protein folding, ligand-protein interactions, and enzyme catalysis.
 This tutorial focuses on a small protein, **Ubiquitin**, which will be simulated for a time of **100 ns**. Ubiquitin is a well-studied protein involved in various cellular processes, making it a suitable example for learning molecular dynamics simulations using Amber 2025.
