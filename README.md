@@ -10,7 +10,7 @@ Comprehensive introduction to classical molecular dynamics (MD) simulations for 
 
 ## Target System & Scope
 * **Protein:** Ubiquitin (small, stable, well-characterized regulatory protein)
-* **Software:** Amber (AmberTools 2025 / Amber 2025)
+* **Software:** Amber (AmberTools 2025 / Amber 2025 / Gromacs 2025)
 * **Simulation Length:** 100 ns 
 * **Ensemble:** NVT heating followed by NPT production
 
