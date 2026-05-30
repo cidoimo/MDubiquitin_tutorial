@@ -67,7 +67,7 @@ Flags breakdown:
 
 Once the command is executed, you will be prompted to select groups for fitting and analysis. Select Protein-H (type 2) as the reference group, and Protein-H (type 2) again as the group to calculate the RMSD.
 
-You can visualize the resulting rmsd.xvg file using xmgrace/python/R. For simplicity, here you're gonna see the results file plotted with xmgrace (yeah, I'm a bit melancolhol because it's the first program I used for representing things during my master's thesis). To open a file with xmgrace, simply ```xmgrace rmsd.xvg```
+You can visualize the resulting rmsd.xvg file using xmgrace/python/R. For simplicity, here you're gonna see the results file plotted with xmgrace (yeah, I'm a bit melancholic because it's the first program I used for representing things during my master's thesis). To open a file with xmgrace, simply ```xmgrace rmsd.xvg```
 
 ---
 
@@ -90,5 +90,49 @@ Flags breakdown:
 | RMSD | RMSF |
 | :---: | :---: |
 | <img src="https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/images/rmsd.png" width="500"> | <img src="https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/images/rmsf.png" width="500"> |
+
+</div>
+
+---
+### Step 2b: Structural Compactness (Rg)
+The Radius of Gyration (Rg) is a fundamental physical metric used to evaluate the overall compactness and global structural integrity of a protein. It is defined as the mass-weighted root mean square distance of a collection of atoms from their common center of mass.
+
+* Global Compactness: A stable Rg value over the course of an MD trajectory indicates that the protein maintains its globular fold and defined shape.
+* Structural Integrity: By monitoring the Rg, you can detect signs of structural unfolding. If the Rg exhibits a sudden or sustained increase, it suggests that the protein is losing its native compact state and becoming more expanded or disordered within the solvent.
+* Equilibrium Indicator: Along with RMSD, Rg is a standard diagnostic tool to confirm that your simulation has reached a stable equilibrium state.
+
+```bash
+gmx gyrate -s frame0_centered.pdb -f your_trajectory_fittedCA.xtc -o rgyr.xvg
+```
+
+<div align="center">
+
+| Radius of Gyration (Rg) |
+| :---: |
+| <img src="https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/images/Rgyr.png" width="500"> |
+
+</div>
+
+---
+
+### Step 3: Principal Component Analysis
+
+
+---
+
+### Step 4a: Interaction Network - Hydrogen bonds
+
+
+
+### Step 5a: Interaction Network - Salt Bridges
+
+
+---
+
+<div align="center">
+
+| | **Hey there, gotcha!** | |
+| :---: | :--- | :---: |
+| | Congratulations! You've successfully navigated the core workflow of Molecular Dynamics. You have learned how to prepare a system, run a simulation, and—most importantly—extract meaningful data to validate your protein's behavior. You now have a solid, comprehensive overview of how to simulate and analyze a molecular trajectory. From the initial system setup to the final RMSD, RMSF, and Radius of Gyration analyses, you have covered the essential steps of a professional MD study. You are definitely on the right track to becoming a structural bioinformatician! Keep exploring! | <img src="https://media.tenor.com/on6WFzYlLJcAAAAM/pokemon-cute.gif" width="250"> |
 
 </div>
