@@ -21,8 +21,9 @@ Well, now. Before calculating metrics like RMSD, we must "fit" the trajectory to
   
 | Unfitted Trajectory | Fitted Trajectory |
 | :---: | :---: |
-| <img src="https://github.com/cidoimo/MDubiquitin_tutorial/raw/main/Analysis/images/nofit.gif" width="300"> | <img src="https://github.com/cidoimo/MDubiquitin_tutorial/raw/main/Analysis/images/fit.gif" width="300"> |
+| <img src="https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/images/nofit.gif" width="300"> | <img src="https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/images/fit.gif" width="300"> |
 
+https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/images/fit.gif
 </div>
 
 Watching this you can easily understand why it's important to fit the trajectory BEFORE doing the analysis. We don't want any kind of false results, no?
