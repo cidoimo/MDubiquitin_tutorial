@@ -6,7 +6,7 @@ An NVT simulation allows the atoms to move and interact based on classical mecha
 
 ---
 
-## 🌡️ Step 5: Equilibration (NVT)
+## 🌡️ Equilibration (NVT)
 
 The thermal equilibration is performed over **four sequential runs** with gradually decreasing harmonic constraints on the solute (residues 1-354):
 * **`nvt1.in`**: Tight constraints at **0.5 kcal/mol** (includes the heating ramp)
@@ -52,4 +52,49 @@ NVT Equilibration Stage 2/3/4 - Constant 300K
  &wt type='TEMP0', istep1=0, istep2=2500000, value1=300.0, value2=300.0, /
  &wt type='END', /
 ```
-                                                                                                                                                                                                                                                                                      
+
+### 🚀 GPU Execution & Job Monitoring
+From NVT onwards, simulations run on GPUs using pmemd.cuda. Follow this execution protocol:
+
+#### 1. Check GPU Status
+```bash
+nvidia-smi
+```
+Inspect the output table. Look at the GPU ID (0 or 1) and ensure the Volatile GPU Utilization (%) is at 0%, indicating it is idle and free to use.
+
+#### 2. Assign the Target GPU
+
+```bash
+export CUDA_VISIBLE_DEVICES=x   # Replace 'x' with your free GPU ID (0 or 1)
+```
+
+#### 3. Launch the Job in the Background
+
+Run the jobs sequentially using *nohup* and & to safely disconnect from the terminal session without killing the process.
+Step 1 (Starting from the 4th minimization restart file):
+
+```bash
+nohup pmemd.cuda -O -i nvt1.in -p complesso.prmtop -c restrt.em4 -o mdout.nvt1 -inf mdinfo.nvt1 -r restrt.nvt1 -x mdcrd.nvt1 &
+nohup pmemd.cuda -O -i nvt2.in -p complesso.prmtop -c restrt.nvt1 -o mdout.nvt2 -inf mdinfo.nvt2 -r restrt.nvt2 -x mdcrd.nvt2 &
+```
+(Continue this sequential pattern for nvt3 and nvt4).
+
+
+📊 Real-Time Monitoring Commands
+
+* *htop*: Monitor host CPU and RAM usage.
+* *nvidia-smi*: Check active VRAM allocations and GPU compute load.
+* *tail -f mdinfo.nvt1*: Track calculation progress, current temperature, and Estimated Time of Arrival (ETA).
+
+---
+
+## 🌡️ Pressurization (NPT)
+The NPT ensemble maintains a constant Number of particles (N), Pressure (P), and Temperature (T). This mimics realistic experimental environments where the molecular system is in contact with atmospheric conditions.
+
+Following the four NVT runs, a single fully unconstrained NPT run (5 ns) is required to stabilize the system's density and pressure. In the NPT Input File (npt.in) all positional restraints are removed (ntr=0), and the barostat is activated (ntb=2, ntp=1).
+Once npt.in is ready, launch it in the background using the restart file generated at the end of the final NVT run (restrt.nvt4):
+
+```bash
+nohup pmemd.cuda -O -i npt.in -p complesso.prmtop -c restrt.nvt4 -o mdout.npt -inf mdinfo.npt -r restrt.npt -x mdcrd.npt &
+```
+Once this phase completes successfully, your system's volume, temperature, and pressure will be fully equilibrated, making it completely ready for long-term Production MD runs.
