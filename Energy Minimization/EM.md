@@ -1,4 +1,6 @@
 # Energy Minimization (EM) in AMBER
+![AmberTools 2025](https://img.shields.io/badge/AmberTools-2025-blue)
+![Amber2025](https://img.shields.io/badge/Amber-2025-red)
 
 Energy Minimization (EM) is the process of finding a structure of a molecular system that corresponds to a local minimum on its potential energy surface (PES). This is achieved by iteratively adjusting the positions of the atoms until the force on each atom is approximately zero, resulting in an **"optimized geometry"** or **"minimum energy structure"**.
 
