@@ -1,4 +1,6 @@
 # Equilibration (NVT) and Pressurization (NPT)
+![AmberTools 2025](https://img.shields.io/badge/AmberTools-2025-blue)
+![Amber2025](https://img.shields.io/badge/Amber-2025-red)
 
 After completing the four static energy minimization steps, the system must be equilibrated—first in temperature (**NVT** ensemble) and then in pressure (**NPT** ensemble). 
 
