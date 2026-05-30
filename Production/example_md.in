@@ -1,0 +1,27 @@
+# Example of MD production phase input file
+
+100 ns Unconstrained Production MD Run
+ &cntrl
+  imin     = 0,
+  irest    = 1,
+  ntx      = 7,
+  iwrap    = 1,
+  ntb      = 2,
+  pres0    = 1.0,
+  ntp      = 1,
+  taup     = 2.0,
+  cut      = 8.0,
+  ntr      = 0,
+  ntc      = 2,
+  ntf      = 2,
+  tempi    = 300.0,
+  temp0    = 300.0,
+  ntt      = 3,
+  gamma_ln = 1.0,
+  nstlim   = 50000000,   ! 50M steps * 0.002 ps = 100,000 ps = 100 ns total runtime
+  dt       = 0.002,
+  ntpr     = 1000,
+  ntwx     = 2500,
+  ntwr     = 1000,
+  ioutfm   = 1,
+ /
