@@ -5,6 +5,7 @@ Molecular Dynamics (MD) tutorial to simulate ubiquitin protein with AMBER
 ![Amber2025](https://img.shields.io/badge/Amber-2025-red)
 ![VMD](https://img.shields.io/badge/Visualization-VMD-green)
 ![CUDA](https://img.shields.io/badge/GPU-CUDA%20Accelerated-orange)
+![Gromacs2025](https://img.shields.io/badge/Gromacs-2025-yellow)
 
 Comprehensive introduction to classical molecular dynamics (MD) simulations for Master's thesis students. This tutorial provides hands-on guidance for setting up, running, and analyzing an MD simulation of biomolecular systems.
 
