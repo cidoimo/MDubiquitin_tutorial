@@ -17,10 +17,10 @@ Comprehensive introduction to classical molecular dynamics (MD) simulations for 
 The training pipeline is structured into three progressive modules:
 
 1. **MD Simulation of Ubiquitin with AMBER (Work Block)**
-   * System preparation via LEaP (solvation, neutralization)
-   * Energy minimization (steepest descent & conjugate gradient)
-   * System heating and equilibration with position restraints
-   * 100 ns unrestrained production run using CUDA acceleration
+   * System preparation via LEaP (solvation, neutralization) --> ![CLICK ME]([https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Energy%20Minimization](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Topology%20Building))
+   * Energy minimization (steepest descent & conjugate gradient) --> ![CLICK ME](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Energy%20Minimization)
+   * System heating and equilibration with position restraints --> ![CLICK ME]([https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Energy%20Minimization](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Equilibration))
+   * 100 ns unrestrained production run using CUDA acceleration --> ![CLICK ME]([https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Energy%20Minimization](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Production))
 
 2. **Visualization of Trajectories with VMD**
    * Loading topology and coordinate trajectory tracks
@@ -36,3 +36,11 @@ The training pipeline is structured into three progressive modules:
 * AMBER25 installed on your pc
 * Gromacs suite 2025 installed on your pc
 * Access to GPU-accelerated computing nodes (for production run efficiency)
+
+
+---
+---
+
+| | 📝 **Credits & Documentation** | |
+| :---: | :--- | :---: |
+| | **Thanks to Alessia Pinto for beta-testing and debugging this tutorial!** <br><br> Congrats on surviving the setup! Welcome to the club! <br><br> 📚 *For all technical details and full parameters, please visit the [AMBER25 Manual](https://ambermd.org/doc12/Amber25.pdf).* | ![Pikachu in serious mood](https://media.tenor.com/_hzf0RfV_w0AAAAM/pikachu-in-serious-mood-pikachu.gif) 
