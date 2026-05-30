@@ -1,0 +1,18 @@
+# Example of input file for energy minimization
+
+Initial Energy Minimization with Restraints
+ &cntrl
+  imin   = 1,
+  maxcyc = 2000,
+  ncyc   = 500,
+  ntb    = 1,
+  ntr    = 1,
+  cut    = 9.0,
+  ntpr   = 1,
+  iwrap  = 1,
+  ntwx   = 100,
+ /
+Hold the protein fixed 20.0
+RES 1 76
+END
+END
