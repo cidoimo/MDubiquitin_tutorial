@@ -38,7 +38,5 @@ If you don't have VMD installed:
 * Everything would work, now, by simply typing ```vmd``` in your command line.
 
 ## 🎨 Personalize Your View
-Once you have your trajectory loaded, the real fun begins! **Have fun experimenting:** change the representations (NewCartoon, Licorice, Surf), play with colors to highlight different domains, and explore every single frame of your protein in VMD. Make it look as good as the science behind it!
-
-
-
+Once you have your trajectory loaded, the real fun begins! (In this folder you'll find the frame0 of the MD and the xtc file. You can use them, if you like).  
+**Have fun experimenting:** change the representations (NewCartoon, Licorice, Surf), play with colors to highlight different domains, and explore every single frame of your protein in VMD. Make it look as good as the science behind it!
