@@ -1,5 +1,6 @@
 ## 📊 Analyses of MD Trajectories
 ![Gromacs2025](https://img.shields.io/badge/Gromacs-2025-yellow)
+![VMD](https://img.shields.io/badge/VDM-1.9.3-green)
 
 Molecular Dynamics (MD) trajectories are data-rich, but analyzing them requires removing global motions to focus on internal dynamics. We will use the **Gromacs 2023** suite for these analyses. If you haven't installed it yet, you can do so via `sudo apt-get install -y gromacs`. For any kind of issues, please refer to the ![Gromacs 2025 Manual](https://manual.gromacs.org/documentation/2025.0/manual-2025.0.pdf).
 
@@ -115,17 +116,157 @@ gmx gyrate -s frame0_centered.pdb -f your_trajectory_fittedCA.xtc -o rgyr.xvg
 
 ---
 
+### BONUS step: Skipping the MD trajectory
+When working with MD trajectories, you will often find that the resulting files are massive, frequently spanning several gigabytes or even terabytes. Processing every single frame is often computationally expensive and, more importantly, statistically redundant.
+Why Skip Frames?
+* Reduced Computational Cost: Calculating geometric parameters for every frame requires significant CPU/GPU resources. By analyzing a subset of frames, you can drastically reduce processing time without losing biological meaning.
+* Mitigating Correlations: MD simulations often produce highly correlated snapshots. If your sampling frequency is faster than the physical process you are studying, consecutive frames provide little new information.
+* Memory Management: Loading an entire multi-gigabyte trajectory into memory can crash your analysis environment. Skipping frames allows you to downsample the trajectory to a manageable size.
+
+For this tutorial, you'll skip the MD trajectory every 50 frames with the *-skip* flag:
+
+```bash
+gmx trjconv -s frame0_centered.pdb -f your_trajectory_fittedCA.xtc -skip 50 -o your_trajectory_skipped50_fittedCA.xtc
+```
+
+---
+
 ### Step 3: Principal Component Analysis
+Principal Component Analysis (PCA), also known as Essential Dynamics (ED) within the context of molecular dynamics, is a linear statistical technique used to reduce data dimensionality. It allows for the isolation of concerted, large-scale macromolecular motions (the "functional" movements) from local, random thermal noise.
+PCA is based on the diagonalization of the covariance matrix of atomic fluctuations. The resulting vectors (eigenvectors) define the direction of the motions, while their associated values (eigenvalues) indicate the amplitude of the fluctuations along that specific direction.
+
+Sampling the essential space in GROMACS is a two-step process using the ```gmx covar``` and ```gmx anaeig``` utilities.
+
+#### A: Calculation and Diagonalization of the Covariance Matrix (gmx covar)
+The ```gmx covar``` command first removes global translational and rotational motions of the protein (via a least-squares fit to a reference structure) and subsequently calculates and diagonalizes the covariance matrix for the selected atoms (typically alpha carbons, C-alpha).
+
+```bash
+gmx covar -s frame0_centered.pdb -f your_trajectory_skip50_fittedCA.xtc -o eigenval.xvg -v eigenvec.trr -av average.pdb -ascii covariance_matrix.dat -l covar.log -tu ns
+```
+
+Key Flags Explained:
+* -s: Structure or topology file (.tpr) used as a reference for the least-squares fit.
+* -f: Input trajectory (it is highly recommended to use a trajectory with periodic boundary conditions removed and already rototranslationally fitted).
+* -o: Output file containing the eigenvalues in descending order. This helps determine how much of the total variance is explained by each component.
+* -v: Output file containing the eigenvectors (the directions of motion).
+* -av: Saves the average structure of the protein during the trajectory, which is useful for subsequent analyses.
+* -ascii: Saves the covariance matrix in a file, useful if you want to plot DCCMs (dynamical cross correlation matrices).
+* -l: Dump a log file of the command.
+* -tu ns: Use the nanoseconds as a timescale for the analysis.
+
+💡 Analysis Tip: When prompted by the terminal, select the C-alpha group for both the least-squares fit and the covariance matrix calculation.
+
+
+#### B: Analysis and Projection of Motions (gmx anaeig)
+Once you have obtained the eigenvectors and eigenvalues, you use ```gmx anaeig``` to analyze the trajectory by projecting it onto the principal components (usually the first two or three, which describe the vast majority of the essential dynamics). The 2D projection plot (PC1 vs PC2) generated from the proj.xvg file serves as a true map of the protein's conformational landscape. The distribution and spread of the data points across this two-dimensional space provide direct insights into the structural stability of the biological system.
+When the plot shows a wide dispersion of points, spreading chaotically across a large area without clear boundaries, it signifies that the protein is highly flexible and unstable. In this scenario, the macromolecola is continuously sampling a vast array of different conformations due to a flat energy landscape. This behavior is typical for intrinsically disordered proteins, proteins undergoing denaturation, or specific mutants that compromise structural integrity.
+Conversely, when the data points concentrate into tight, highly localized clusters with minimal spread, the protein is structurally stable. This indicates that the molecule is trapped within a deep potential energy well, fluctuating minimally around a well-defined native conformation. In cases where multiple dense, distinct clusters separated by empty regions are observed, the protein is undergoing transitions between different metastable states, which is the underlying mechanism for activation or conformational switching.
+
+```bash
+gmx anaeig -s frame0_centered.pdb -f your_trajectory_skip50_fittedCA.xtc -v eigenvec.trr -eig eigenval.xvg -2d 2dproj.xvg -tu ns -first 1 -second 2
+```
+
+Key Flags Explained:
+* -v: Specifies the input eigenvectors file generated in the previous step.
+* -eig: Reads the eigenvalue file to correctly scale or verify the components.
+* -2d: Output file for the projections of the trajectory along the selected eigenvectors over time (.xvg).
+* -first 1 -last 2: Restricts the analysis and projection to the first 2 principal components (PC1, PC2), which typically describe the vast majority of the system's total variance.
+* -tu ns: Ensures time coordinates in the projection file are written in nanoseconds.
+
+So, now plot the 2d projection using xmgrace:
+
+```bash
+xmgrace 2dproj.xvg
+```
+
+<div align="center">
+  
+| 2dproj (before) A | 2dproj (after) B |
+| :---: | :---: |
+| <img src="https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/images/2dproj_before.png" width="500"> | <img src="https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/images/2dproj.png" width="500"> |
+
+</div>
+
+
+You're gonna retrieve something like this (A). Pretty messy, no? Let's change a bit the representation!
+Double click on a whetever point of the plot. Then change:
+* Symbol properties --> type Circle
+* Symbol properties --> Size 33
+* Line properties --> None
+
+Now double click on the X-axis or Y-axis and change the limits for both axis to (-3, 3). Adjust the tick properties (major spacing) if needed to 1.
+A little bit better, no? (see B) Every point is a frame analyzed with the PCA. 
 
 
 ---
 
 ### Step 4a: Interaction Network - Hydrogen bonds
+Hydrogen bonds are the "silent architects" of protein structure. While individual hydrogen bonds are relatively weak compared to covalent bonds, their sheer number within a single protein creates a robust, cooperative network that dictates the protein's final 3D architecture.
+In the context of protein folding, hydrogen bonds occur primarily between the polar groups of the polypeptide backbone and, to a lesser extent, between the side chains of amino acids. They are the primary drivers for the formation of local structures!  
+*Note*: Because hydrogen bonds are sensitive to pH, temperature, and ionic strength, they are often the first points of failure when a protein undergoes denaturation.
 
+For the purpose of this tutorial, you'll analyze the HBs through the software VMD. How?
 
+```bash
+vmd frame0_centered.pdb your_trajectory_skip50_fittedCA.xtc
+```
+
+* Go to Extensions --> Analysis --> Hydrogen Bonds
+
+You should get an interactive menu like this (A):
+
+<div align="center">
+
+| VMD Hydrogen Bonds (A) | Number of Hydrogen Bonds (B) |
+| :---: | :---: |
+| <img src="https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/images/hbonds_panelVMD.png" width="500"> | <img src="https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/images/number_HB.png" width="500"> |
+
+</div>
+
+For now, you can select just the protein, as you're gonna analyze the intra-protein HBs. You should know that, by selecting different regions of the protein, you can retrieve specific results related to what you're researching about.
+It's really important to CHANGE the Donor-Acceptor distance and the Angle cutoff. Why? A hydrogen bond was assumed to exist if the donor–acceptor distance was shorter than 0.30 nm and the hydrogen-donor–acceptor angle was less than 30°. The primary reason to adjust these thresholds is that hydrogen bond geometry is highly dependent on the local protein environment and the specific force field used in MD simulations. A seminal reference for defining geometric constraints in protein hydrogen bonding is: _Baker, E. N., & Hubbard, R. E. (1984). Hydrogen bonding in globular proteins. Progress in Biophysics and Molecular Biology, 44(2), 97-179_.
+
+So, now change the values in this way:
+* Donor-Acceptor distance: 3.5
+* Angle cutoff: 30
+* Calculated detailed info for: from None to Residue Pairs
+
+You can customize your output directory as needed. It is strongly recommend enabling the log file option to ensure you have a comprehensive record of your analysis parameters and execution history readily available.
+Furthermore, ensure the "Write output to files" option is selected to generate the following essential datasets:
+* Frame/Bond Statistics: This file records the total number of hydrogen bonds detected for every frame of the trajectory. You can easily visualize this data as a time-series plot using tools like xmgrace to identify fluctuations in structural stability over time, as shown above in (B).
+* Detailed Hydrogen Bond Data (only works if you select the "calculated detailed info for Residue Pairs"): This file provides a granular breakdown, specifying the participating donor-acceptor pairs and their occupancy (the percentage of time each specific bond is maintained during the simulation). This is a critical metric for identifying key residues responsible for stabilizing the protein fold or mediating functional dynamics. By analyzing high-occupancy bonds over the course of your trajectory, you can effectively distinguish between "transient" interactions and "stable" structural motifs that define your protein's conformational ensemble.
 
 ### Step 5a: Interaction Network - Salt Bridges
+Beyond hydrogen bonds, salt bridges (electrostatic interactions) are vital structural components. A salt bridge occurs through an electrostatic interaction between a positively charged group (e.g., the side chains of Lysine or Arginine) and a negatively charged group (e.g., Aspartic or Glutamic acid).
+Salt bridges are essential to protein structure and function primarily because they provide a unique combination of long-range stability, thermal resistance, and conformational control. Unlike hydrogen bonds, the electrostatic interactions within salt bridges operate over longer distances. This allows them to act as physical anchors between distant protein domains, providing superior structural rigidity to the overall protein fold.
+Additionally, these interactions serve as energetic "stitches" that prevent protein denaturation under harsh conditions. This is why proteins from thermophilic organisms—which thrive in extreme heat—often feature a much higher density of salt bridges to maintain their shapes.
+Finally, salt bridges are critical for dynamic biological functions because they frequently act as conformational switches. Because they are highly sensitive to their environment, the disruption or formation of a single salt bridge (often triggered by localized pH changes or ligand binding) can cause a massive structural shift, effectively turning a protein's activity on or off.
 
+Before starting the analysis, create a new directory. Trust me, you'll thank me later!
+
+```bash
+mkdir SB
+```
+
+Again, you'll analyze the SBs through the software VMD. How?
+
+```bash
+vmd frame0_centered.pdb your_trajectory_skip50_fittedCA.xtc
+```
+
+* Go to Extensions --> Analysis --> Salt Bridges
+
+You should get an interactive menu like this:
+
+<div align="center">
+
+| Salt Bridges |
+| :---: |
+| <img src="https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/images/saltbridges_panelVMD.png" width="500"> |
+
+</div>
+
+Leave the default options. Be sure to select as output directory the new folder you've just created. This is essential because, for each SB found, VMD will retrive a timeserie file. They can be a lot, of course, depending on how big your protein is.
 
 ---
 
