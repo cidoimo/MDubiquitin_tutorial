@@ -3,7 +3,7 @@ Molecular Dynamics (MD) tutorial to simulate ubiquitin protein with AMBER
 
 ![AmberTools 2025](https://img.shields.io/badge/AmberTools-2025-blue)
 ![Amber2025](https://img.shields.io/badge/Amber-2025-red)
-![VMD](https://img.shields.io/badge/Visualization-VMD-green)
+![VMD](https://img.shields.io/badge/VMD-1.9.3-green)
 ![CUDA](https://img.shields.io/badge/GPU-CUDA%20Accelerated-orange)
 ![Gromacs2025](https://img.shields.io/badge/Gromacs-2025-yellow)
 
@@ -25,19 +25,19 @@ The training pipeline is structured into three progressive modules:
    * 100 ns unrestrained production run using CUDA acceleration --> [CLICK ME](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/Production)
 
 2. **Visualization of Trajectories with [VMD](https://github.com/cidoimo/MDubiquitin_tutorial/tree/main/VMD%20Visualization)**
+   * Conversion from AMBER file to GROMACS file via `cpptraj`
    * Loading topology and coordinate trajectory tracks
    * Customizing graphical representations (NewCartoon, structural color-coding)
 
-3. **Analyses of MD Trajectories**
-   * Quantitative metrics extraction via `cpptraj` / Gromacs tools
+4. **Analyses of MD Trajectories [HERE](https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/MDAnalysis.md)**
    * Stability and Flexibility assessments: Root Mean Square Deviation (RMSD), Root Mean Square Fluctuation (RMSF), Radius of Gyration (RGyr), Principal Component Analysis (PCA) and building of Dynamical Cross-Correlation Matrices (DCCMs). Secondary Structure Analysis
    * Interactions Networks: Hydrogen Bond and Salt Bridges analyses
 
 ## Prerequisites
-* Basic Linux/Unix command-line competency
-* AMBERTools and AMBER25 installed on your pc
-* Gromacs suite 2025 installed on your pc
-* Xmgrace, Python or R installed on your pc
+* Basic Linux/Unix command-line competency. 
+* AMBERTools and AMBER25 installed on your pc. [HELP](https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/AMBERinsallation.md).
+* Gromacs suite 2025 installed on your pc. [HELP](https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/GMXinstallation.md).
+* Xmgrace, Python or R installed on your pc. [HELP](https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Visualizers_installation.md).
 * Access to GPU-accelerated computing nodes (for production run efficiency)
 
 
