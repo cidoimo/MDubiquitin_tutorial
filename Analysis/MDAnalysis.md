@@ -132,7 +132,7 @@ gmx trjconv -s frame0_centered.pdb -f your_trajectory_fittedCA.xtc -skip 50 -o y
 ---
 
 ### Step 3: Principal Component Analysis
-Principal Component Analysis (PCA), also known as Essential Dynamics (ED) within the context of molecular dynamics, is a linear statistical technique used to reduce data dimensionality. It allows for the isolation of concerted, large-scale macromolecular motions (the "functional" movements) from local, random thermal noise.
+Principal Component Analysis (PCA), also known as Essential Dynamics (ED) within the context of molecular dynamics, is a linear statistical technique used to reduce data dimensionality. It allows for the isolation of concerted, large-scale macromolecular motions (the "functional" movements or collective movements) from local, random thermal noise.
 PCA is based on the diagonalization of the covariance matrix of atomic fluctuations. The resulting vectors (eigenvectors) define the direction of the motions, while their associated values (eigenvalues) indicate the amplitude of the fluctuations along that specific direction.
 
 Sampling the essential space in GROMACS is a two-step process using the ```gmx covar``` and ```gmx anaeig``` utilities.
@@ -158,12 +158,12 @@ Key Flags Explained:
 
 
 #### B: Analysis and Projection of Motions (gmx anaeig)
-Once you have obtained the eigenvectors and eigenvalues, you use ```gmx anaeig``` to analyze the trajectory by projecting it onto the principal components (usually the first two or three, which describe the vast majority of the essential dynamics). The 2D projection plot (PC1 vs PC2) generated from the proj.xvg file serves as a true map of the protein's conformational landscape. The distribution and spread of the data points across this two-dimensional space provide direct insights into the structural stability of the biological system.
-When the plot shows a wide dispersion of points, spreading chaotically across a large area without clear boundaries, it signifies that the protein is highly flexible and unstable. In this scenario, the macromolecola is continuously sampling a vast array of different conformations due to a flat energy landscape. This behavior is typical for intrinsically disordered proteins, proteins undergoing denaturation, or specific mutants that compromise structural integrity.
+Once you have obtained the eigenvectors and eigenvalues, you use ```gmx anaeig``` to analyze the trajectory by projecting it onto the principal components (usually the first two or three, which describe the vast majority of the essential dynamics). The 2D projection plot (PC1 vs PC2) generated from the proj.xvg file serves as a true map of the protein's conformational landscape. The distribution and spread of the data points across this 2d-dimensional space provide direct insights into the structural stability of the biological system.
+When the plot shows a wide dispersion of points, spreading chaotically across a large area without clear boundaries, it signifies that the protein is highly flexible and unstable. In this scenario, the macromolecule is continuously sampling a vast array of different conformations due to a flat energy landscape. This behavior is typical for intrinsically disordered proteins, proteins undergoing denaturation, or specific mutants that compromise structural integrity.
 Conversely, when the data points concentrate into tight, highly localized clusters with minimal spread, the protein is structurally stable. This indicates that the molecule is trapped within a deep potential energy well, fluctuating minimally around a well-defined native conformation. In cases where multiple dense, distinct clusters separated by empty regions are observed, the protein is undergoing transitions between different metastable states, which is the underlying mechanism for activation or conformational switching.
 
 ```bash
-gmx anaeig -s frame0_centered.pdb -f your_trajectory_skip50_fittedCA.xtc -v eigenvec.trr -eig eigenval.xvg -2d 2dproj.xvg -tu ns -first 1 -second 2
+gmx anaeig -s frame0_centered.pdb -f your_trajectory_skip50_fittedCA.xtc -v eigenvec.trr -eig eigenval.xvg -2d 2dproj.xvg -tu ns -first 1 -second 2 -extr collective_motions -max 0 -nframes 10
 ```
 
 Key Flags Explained:
@@ -172,6 +172,7 @@ Key Flags Explained:
 * -2d: Output file for the projections of the trajectory along the selected eigenvectors over time (.xvg).
 * -first 1 -last 2: Restricts the analysis and projection to the first 2 principal components (PC1, PC2), which typically describe the vast majority of the system's total variance.
 * -tu ns: Ensures time coordinates in the projection file are written in nanoseconds.
+* -extr: writes a separate PDB trajectory file named collective_motions.pdb that contains a step-by-step linear interpolation along the selected eigenvector. By setting -max 0, the tool automatically calculates the extreme coordinates based on the maximum displacements found in the actual simulation trajectory, while -nframes 10 specifies the number of intermediate conformational frames generated between the two structural extremes.
 
 So, now plot the 2d projection using xmgrace:
 
@@ -187,7 +188,6 @@ xmgrace 2dproj.xvg
 
 </div>
 
-
 You're gonna retrieve something like this (A). Pretty messy, no? Let's change a bit the representation!
 Double click on a whetever point of the plot. Then change:
 * Symbol properties --> type Circle
@@ -196,6 +196,23 @@ Double click on a whetever point of the plot. Then change:
 
 Now double click on the X-axis or Y-axis and change the limits for both axis to (-3, 3). Adjust the tick properties (major spacing) if needed to 1.
 A little bit better, no? (see B) Every point is a frame analyzed with the PCA. 
+
+And what about the collective motions? Take the ```collective_motions1.pdb ``` (corresponding to the collective motions along the PC1) and open it with VMD. Then simply follow these steps:
+* Graphics --> Representations --> Draw Style
+* Set Drawing Method to Tube
+* Set Coloring Method to Trajectory --> Timestep
+* Graphics --> Representations --> Trajectory
+* Set Draw Multiple Files to --> 0:10
+
+The graphical representation you should obtain is displayed below. The color progression—shifting from red to white and then to blue—visualizes both the directional path of the motions within the essential space and their corresponding amplitudes. By tracking this color gradient, you can directly assess structural rigidity, as a wider spread of points across the space indicates larger conformational fluctuations, which is a clear signature of protein instability.
+
+<div align="center">
+
+| Collective Motions (PC1) | 
+| :---: |
+| <img src="https://raw.githubusercontent.com/cidoimo/MDubiquitin_tutorial/main/Analysis/images/collective.png" width="250"> |
+
+</div>
 
 
 ---
