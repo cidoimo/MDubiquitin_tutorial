@@ -1,7 +1,8 @@
-# Prerequisites and Installation Guide (Linux)
+# Prerequisites and Installation Guide (Linux)  
 
 To run the analysis pipeline and visualize the GROMACS output data (such as RMSD, RMSF, Rg, and PCA), you need to install Python, XMGrace, and R on your Linux system. Follow the unified terminal commands below to set up your environment.
 You can choose one of them or use all of three here proposed. It's your choice. For simplicity, in this tutorial xmgrace will be used ad standard.
+
 ---
 
 ## Installation via Command Line
