@@ -70,7 +70,7 @@ check
 * **Check** the charge of the loaded pdb using the charge command (keep in mind the charge of the complex under examination)
 
 ```bash
-charge
+charge pdb
 ```
 
 * **Save** the AMBER processed PDB without water using the savepdb command:
