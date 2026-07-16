@@ -10,7 +10,7 @@ NVT Heating with Positional Restraints on Protein (1-76)
   cut      = 9.0,
   ntr      = 1,
   restraintmask = ':1-76', ! residues on which apply the restraints
-  restraint_wt   = 20.0,   ! restraints applied in kcal/mol
+  restraint_wt   = 0.5,   ! restraints applied in kcal/mol
   ntc      = 2,
   ntf      = 2,
   nmropt   = 1,
