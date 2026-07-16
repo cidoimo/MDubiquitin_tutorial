@@ -12,7 +12,8 @@ Initial Energy Minimization with Restraints
   iwrap  = 1,
   ntwx   = 100,
  /
-Hold the protein fixed 20.0
+Hold the protein fixed 
+20.0
 RES 1 76
 END
 END
