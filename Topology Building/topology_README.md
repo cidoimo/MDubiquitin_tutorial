@@ -49,10 +49,11 @@ The workflow has a setting like this:
 
 * **Load** all the necessary force field (FF): this loading ALWAYS depend on the type of molecules present in the PDB you are using. If there are only proteins, it must be load only the protein FF (protein.ff19SB). If there are proteins and RNA, FFs of proteins and RNA(RNA.OL3) must be loaded. After the loading of all necessary FF, also the FF for water (water.TIP3P) must be loaded to solvate the complex.
 * **All force fields available for AMBER25 are at the following** [link](https://ambermd.org/)
-* To load the FF for proteins, use the command:
+* To load the FF, use the command:
 
 ```bash
 source leaprc.protein.ff19SB
+source leaprc.water.tip3p
 ```
 
 * **Load** the PDB. The PBD must be loaded using a variable name and the loadpdb command, as follows:
