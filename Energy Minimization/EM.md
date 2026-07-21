@@ -39,7 +39,8 @@ Ensure the following parameters are added to your input blocks:
 Restraints are specified at the end of the input file after the closing slash (`/`) using the following wording:
 
 ```text
-Hold the Ubiquitin fixed 20.0
+Hold the Ubiquitin fixed
+20.0
 RES 1 76
 END
 END
