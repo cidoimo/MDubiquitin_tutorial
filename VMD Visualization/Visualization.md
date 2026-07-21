@@ -20,7 +20,7 @@ cpptraj
 parm yourfile_ionized.prmtop
 trajin mdcrd.nvt1
 strip :WAT,Na+    # Removes water and sodium ions
-autoimage :1-46   # Corrects periodic boundary condition (PBC) artifacts
+autoimage :1-76   # Corrects periodic boundary condition (PBC) artifacts
 trajout md_nowat.xtc
 go
 quit
