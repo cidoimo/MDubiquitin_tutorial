@@ -83,7 +83,7 @@ savepdb pdb yourfile_nowat.pdb
 * **Save** prmtop (topology file) and rst7 (coordinates file) without water using the saveamberparms command:
 
 ```bash
-saveamberparms pdb yourfile_nowat.prmtop yourfile_nowat.rst7
+saveamberparm pdb yourfile_nowat.prmtop yourfile_nowat.rst7
 ```
 
 * **Solvate** the system. The solvateOct command is used in the link below, but for now it is preferred a cubic box. Therefore, the command shown must be used:
