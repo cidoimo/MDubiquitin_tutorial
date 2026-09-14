@@ -70,6 +70,23 @@ Once the command is executed, you will be prompted to select groups for fitting 
 
 You can visualize the resulting rmsd.xvg file using xmgrace/python/R. For simplicity, here you're gonna see the results file plotted with xmgrace (yeah, I'm a bit melancholic because it's the first program I used for representing things during my master's thesis). To open a file with xmgrace, simply ```xmgrace rmsd.xvg```
 
+<b>PLEASE, be careful at this point</b>
+If you notice that your plot or analysis shows an initial time that does not start at zero (e.g., due to concatenated trajectories or previous equilibration steps; watch the image), you need to reset the starting time of your trajectory before proceeding. You can reset the time axis using gmx trjconv with the -t0 0 flag:
+
+<div align="center">
+
+| RMSD not beginning from time 0 |
+| :---: |
+| <img src="https://github.com/cidoimo/MDubiquitin_tutorial/blob/main/Analysis/images/rmsd_nogood.jpeg" width="500"> |
+
+</div>
+
+```bash
+gmx trjconv -s frame0_centered.pdb -f your_trajectory_fittedCA.xtc -t0 0 -o your_trajectory_fittedCA_t0.xtc
+```
+
+Make sure to re-run the RMSD calculation—and all downstream trajectory analyses—using this newly corrected trajectory file (your_trajectory_fittedCA_t0.xtc) to keep the time axis consistent across all your results.
+
 ---
 
 RMSF (Root Mean Square Fluctuation) is a measure used to quantify the flexibility or mobility of each atom in a molecule throughout a MD simulation. It is calculated as the square root of the average of the squared fluctuations of each atom's position relative to its average position in the trajectory.
